@@ -7,7 +7,7 @@ var ncmb    　= new NCMB(appKey,clientKey);
 function sendForm() {
         
     //ユーザーの入力したデータを変数にセットする
-    var datetime = $("#form_datetime");                //日時
+    var datetime = $("#form_datetime").val();                //日時
     var text    = $("#form_text").val();               //予定
     var time = $("#form_time").val();                   //時間
     var textarea  = $("#form_textarea").val();          //メモ書き
