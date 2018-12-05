@@ -264,6 +264,29 @@ btn_close.addEventListener('click', function() {
                     </ul>
                 </div>
         </div>
+
+        <div data-role="page" id="SearchPage" data-theme="t" align="left">
+                <header data-role="header" data-position="fixed" data-theme="e" id="header_txt">
+                    <center><h3>Demo3：条件検索</h3></center>
+                </header>
+                <section data-role="content">
+                        <form>
+                            <label for="search">3.日付を検索</label>
+                            <input type ="date" id="search_date" size=20>
+                            <input type="button" value="　検 索　" data-theme="e" data-inline="true" data-mini="true" onclick="searchDate();">
+                        </form>
+                    </div>
+                </section>
+        
+                <!--フッター-->
+                <div data-role="footer" data-position="fixed" data-theme="e" id="demo" class="tab_area clearfix">
+                    <ul>
+                        <li><a href="#FormPage">入力</a></li>
+                        <li><a href="#ListUpPage" onclick="checkForm();">検索結果</a></li>
+                        <li><a href="#SearchPage">検索フォーム</a></li>
+                    </ul>
+                </div>
+            </div>
     </body>
 </html>
 

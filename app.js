@@ -82,33 +82,63 @@ function checkForm(){
             });
 }
 
-function checkPrefecture(){
+function checkDate(divider){
     //データを変数にセット
-    var prefecture = $("#form_datetime").val();
-        
+    var searchdate  = $("#search_date").val();
     //インスタンスの生成
-    var saveData = ncmb.DataStore("SaveData");
+    var saveData  = ncmb.DataStore("SaveData");
         
-    //データの取得
-    saveData.order("createDate",true)
-            .equalTo("datetime", datetime)
-            .equalTo("text", text)
-            .equalTo("time", time)
-            .equalTo("textarea", textarea)
-            .equalTo("income", listA)
-            .equalTo("moneyA", moneyA)
-            .equalTo("spending", listB)
-            .equalTo("moneyB", moneyB)
-            .fetchAll()
-            .then(function(results){
-                //日時の検索に成功した場合の処理
-                console.log("日時の検索に成功しました："+results.length+"件");
-                setData(results);
-                $.mobile.changePage('#ListUpPage');
-            })
-            .catch(function(error){
-                //日時の検索に失敗した場合の処理
-                alert("日時の検索に失敗しました：\n" + error);
-                console.log("日時の検索に失敗しました：\n" + error);
-            });
+    //データの取得：三項演算子(条件 ? 真:偽)によって以前と以後の処理を分ける
+    (divider ? saveData.lessThanOrEqualTo("createDate", { "__type": "Date", "iso": date.toISOString() }) : saveData.greaterThanOrEqualTo("createDate", { "__type": "Date", "iso": date.toISOString() }))
+                       .order("createDate",true)
+                       .fetchAll()
+                       .then(function(results){
+                           //日付の検索に成功した場合の処理
+                           console.log("日付の検索に成功しました："+results.length+"件");
+                           setData(results);
+                       })
+                       .catch(function(error){
+                           //日付の検索に失敗した場合の処理
+                           alert("日付の検索に失敗しました：\n" + error);
+                           console.log("日付の検索に失敗しました：\n" + error);
+                       });
+}
+
+function setData(results) {
+    //操作するテーブルへの参照を取得
+    var table = document.getElementById("formTable");
+        for(i=0; i<results.length; i++) {
+            //テーブルに行とセルを設定
+            var row      = table.insertRow(-1);
+            var cell     = row.insertCell(-1);
+                
+            formTable.rows[i].cells[0].innerHTML = jstDate + "<br>" + "日付：　" + object.get("datetime") + "<br>" +"予定："+object.get("text")+ "予定時間：　" + object.get("time");
+        }
+    var searchResult = document.getElementById("searchResult");
+    searchResult.innerHTML = "検索結果："+results.length+"件";
+        
+    //セットするデータが無かった場合
+    if(results.length == 0){
+        var table = document.getElementById("formTable");
+        formTable.innerHTML = "<br>" + "<center>" + "データはありません" + "</center>" + "<br>";   
+    }
+    $.mobile.changePage('#ListUpPage');
+}
+
+//日付検索ボタン押下時の処理
+function searchDate(){
+    $("#formTable").empty();
+    var searchdate  = $("#search_date").val();
+        
+    //dividerの初期値はtrue
+    var divider = true;
+        
+    //Date型に変換
+    var date = new Date(searchDate);
+        
+    //フィールドの中から探す
+    if(searchdate == ""){
+        alert("年月日を入力してください");                
+    }else
+        checkDate(divider);
 }
