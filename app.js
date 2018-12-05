@@ -55,3 +55,25 @@ function sendForm() {
                 });
     }
 }
+
+function checkForm(){
+    $("#formTable").empty();
+        
+    //インスタンスの生成
+    var saveData = ncmb.DataStore("SaveData");
+        
+    //データを降順で取得する
+    saveData.order("createDate", true)
+            .fetchAll()
+            .then(function(results){
+                //全件検索に成功した場合の処理
+                console.log("全件検索に成功しました："+results.length+"件");
+                //テーブルにデータをセット
+                setData(results);
+            })
+            .catch(function(error){
+                //全件検索に失敗した場合の処理
+                alert("全件検索に失敗しました：\n" + error);
+                console.log("全件検索に失敗しました：\n" + error);
+            });
+}
