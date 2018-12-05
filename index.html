@@ -1,0 +1,235 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+        <script src="components/loader.js"></script>
+        <link rel="stylesheet" href="components/loader.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/cssua.min.js"></script>
+        <script src="js/app.js"></script>
+        <title>入力フォーム</title>
+    </head>
+
+    <body>
+    <!--[Demo1]フォーム送信ページ-->
+        <div data-role="page" id="FormPage" data-theme="t" align="left">
+            <form method="post" name="mainForm">
+                <dialog name="dia">
+                <header data-role="header" data-position="fixed" data-theme="e" id="header_txt">
+                    <center><h3>sample</h3></center>
+                </header>
+                <section data-role="content">
+                    <div id="form_txt">予定
+                        <span id="txt_red">(必須)</span>
+                    </div>
+                    <div align="center">
+                        <input type ="text" id="form_text" size=40>
+                    </div>
+
+                    <div id="form_txt">予定時間
+                        <span id="txt_red">(必須)</span>
+                    </div>
+                    <div align = "center">
+                        <input type ="email" id="form_time" size=40>
+                    </div>
+
+                    <div id="form_txt">詳細
+                    </div>
+                    <div align="center">
+                        <input type ="text" id="form_textarea" size=40>
+                    </div>
+
+                    <div id="p1">
+                            <ul id="switch">
+                                <li id="a">収入</li>
+                                <li id="b">支出</li>
+                            </ul>
+
+                            <div id="form_divA">
+                                    <select id="form_listA">
+                                    <option name="cd" value="">-</option>
+                                    <option name="cb1" value="収入1">項目1</option>
+                                    <option name="cb2" value="収入2">項目2</option>
+                                    <option name="cb3" value="収入3">項目3</option>
+                                    <option name="cb4" value="収入4">項目4</option>
+                                    <option name="cb5" value="収入5">項目5</option>
+                                    <option name="cb6" value="収入6">項目6</option>
+                                    </select>
+
+                                    <div id="form_txt">金額
+                                    </div>
+                                        <div align="center">
+                                            <input type ="text" id="form_moneyA" name="money" data-type="number" size=40>
+                                        </div>
+<script>
+/* テキストボックスを取得 */
+var NBR = document.querySelectorAll( "[data-type='number']" );
+/* イベント操作 */
+for(var i=0;i<NBR.length;i++){ NBR[ i ].oninput = fmtInput }
+
+/* 入力時に実行する処理 */
+function fmtInput( evt ){
+var target = evt.target;
+var data = target.value[ target.value.length-1 ];
+if( ! data.match( /[0-9]/ ) ){
+target.value = target.value.slice( 0, target.value.length-1 );
+}
+target.value = target.value
+.replace( /,/g, '' )
+.replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' );
+}
+</script>
+
+                            </div>
+
+                            <div id="form_divB">
+                                    <select id="form_listB">
+                                    <option name="cd" value="">-</option>
+                                    <option name="cb1" value="支出1">項目1</option>
+                                    <option name="cb2" value="支出2">項目2</option>
+                                    <option name="cb3" value="支出3">項目3</option>
+                                    <option name="cb4" value="支出4">項目4</option>
+                                    <option name="cb5" value="支出5">項目5</option>
+                                    <option name="cb6" value="支出6">項目6</option>
+                                    </select>
+
+                                    <div id="form_txt">金額
+                                    </div>
+                                        <div align="center">
+                                            <input type ="text" id="form_moneyB" name="money" data-type="number" size=40>
+                                        </div>
+<script>
+/* テキストボックスを取得 */
+var NBR = document.querySelectorAll( "[data-type='number']" );
+/* イベント操作 */
+for(var i=0;i<NBR.length;i++){ NBR[ i ].oninput = fmtInput }
+
+/* 入力時に実行する処理 */
+function fmtInput( evt ){
+var target = evt.target;
+var data = target.value[ target.value.length-1 ];
+if( ! data.match( /[0-9]/ ) ){
+target.value = target.value.slice( 0, target.value.length-1 );
+}
+target.value = target.value
+.replace( /,/g, '' )
+.replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' );
+}
+</script>
+
+                            </div>
+                    </div>
+<style>
+
+                            #switch {
+                              display: block;
+                              list-style: none;
+                              padding: 0;
+                              margin: 0 auto;
+                              overflow: hidden;
+                              }
+                            .btn {
+                              float: left;
+                              width: 200px;
+                              margin: 0 0 2rem 10px;
+                              padding: 5px;
+                              font-size: 1.6rem;
+                              text-align: center;
+                              background: #00008b;
+                              color: #FFF;
+                              border-bottom: 4px solid rgba(0, 0, 0, .2);
+                              }
+                            .btn:hover {
+                              opacity: .8;
+                              cursor: pointer;
+                              }
+                            .inactive { opacity: .5; }
+                            .inactive:hover {
+                              opacity: .5;
+                              cursor: default;
+                              }
+                            .boxDisplay { display: block; }
+                            .boxNone { display: none; }
+                            
+</style>                    
+
+<script>
+
+        function clickSwitch() {
+          'use strict';
+          var isA = 0; // 現在地判定
+          var btnA = document.getElementById('a');
+          var btnB = document.getElementById('b');
+          var divA = document.getElementById('form_divA');
+          var divB = document.getElementById('form_divB');
+        
+          function setState(isA) {
+            btnA.className = (isA == 0) ? 'btn inactive' : 'btn'; // Aのとき非表示
+            divA.className = (isA == 0) ? 'boxDisplay' : 'boxNone'; // Aのとき表示
+            btnB.className = (isA == 1) ? 'btn inactive' : 'btn'; // Bのとき非表示
+            divB.className = (isA == 1) ? 'boxDisplay' : 'boxNone'; // Bのとき表示
+          }
+          setState(0);
+        
+          btnA.addEventListener('click', function(){
+            if (isA == 0) return;
+            isA = 0;
+            setState(0);
+          });
+          btnB.addEventListener('click', function(){
+            if (isA == 1) return;
+            isA = 1;
+            setState(1);
+          });
+        };
+        document.addEventListener("DOMContentLoaded", clickSwitch, false);
+        
+        
+        
+</script>
+                    
+                    <input type="button" value="家計簿を表示する" onclick="btn1_click()" />
+
+                    <script>
+                            //初期表示は非表示
+                            document.getElementById("p1").style.display ="none";
+                            
+                            function btn1_click(){
+                                var y1 = document.getElementById("p1");
+                            
+                                if(y1.style.display=="block"){
+                                    // noneで非表示
+                                    y1.style.display ="none";
+                                }else{
+                                    // blockで表示
+                                    y1.style.display ="block";
+                                }
+                            }
+                    </script>
+                  
+                    <!--送信ボタン-->
+                    <input type="button" name="SendBtn" onclick="return sendForm();" value="送 信" data-theme="e" id="get">
+                    <input type="button" value="閉じる" id="close">
+                </section>
+                </dialog>
+            </form>
+            <button id="show">だいあろぐひらく</button>
+<script>
+var dialog = document.querySelector('dialog');
+var btn_show = document.getElementById('show');
+var btn_close = document.getElementById('close');
+btn_show.addEventListener('click', function() {
+  dialog.showModal();
+}, false);
+btn_close.addEventListener('click', function() {
+  dialog.close();
+  location.reload();
+
+}, false);
+</script>
+        </div>
+    </body>
+</html>
+

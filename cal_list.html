@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<title>jQueryで縦型カレンダーの表示①</title>
+<style>
+.schedule {
+	border-collapse: collapse;
+	margin:0;
+	padding:0; 
+	width:500px;
+	-khtml-user-drag: element;
+}
+.schedule th{
+	background: #6CC;
+}
+.schedule th,
+.schedule td {
+	border:1px solid #999;
+	border-collapse: collapse;
+	margin:0;
+	padding:0.6em;
+	}
+
+</style>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+$(function() {
+var today = new Date();
+var myYear = today.getFullYear();
+var myMonth = today.getMonth();
+tuki = myMonth +1+"月のカレンダー";
+//月末を取得
+var lastday = new Date(myYear, myMonth+1, 0);
+lastday = lastday.getDate();
+var wak = "";	
+for (var i=1 ; i<=lastday ; i++){
+xday = new Date(myYear, myMonth, i);
+xdays = xday.getDay();
+weekjp = new Array("日","月","火","水","木","金","土");	
+weeks = weekjp[xdays];
+wak += "<tr>\n";
+wak += "<th>"+weeks+"</th>\n";
+wak += "<td align='center'>"+i+"</td>\n";
+wak += "<td></td>\n";
+wak += "</tr>\n";
+}
+$("#tuki").append(tuki);
+$("#listbox").append(wak);
+});
+</script>
+</head>
+<body>
+
+<h2 id="tuki"></h2>
+<p>縦型カレンダーを表示</p>
+<table id="listbox" class="schedule">
+<tr>
+<th>曜日</th>
+<th>日付</th>
+<th width="76%">コメント</th>
+</tr>
+</table>
+
+</body>
+</html>
