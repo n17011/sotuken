@@ -218,16 +218,16 @@ target.value = target.value
                     <!--送信ボタン-->
                     <input type="button" name="SendBtn" onclick="return sendForm();" value="送 信" data-theme="e" id="get">
                 </section>
-            </form>
-
-        </div>
+        
         <!--フッター-->>
-        <div data-role="footer" data-position="fixed" data-theme="e" id="demo" class="tab_area clearfix">
-                <ul>
-                    <li><a href="#FormPage">Demo1</a></li>
-                    <li><a href="#ListUpPage" onclick="checkForm();">Demo2</a></li>
-                    <li><a href="#SearchPage">Demo3</a></li>
-                </ul>
+                <div data-role="footer" data-position="fixed" data-theme="e" id="demo" class="tab_area clearfix">
+                        <ul>
+                            <li><a href="#FormPage">Demo1</a></li>
+                            <li><a href="#ListUpPage" onclick="checkForm();">Demo2</a></li>
+                            <li><a href="#SearchPage">Demo3</a></li>
+                        </ul>
+                </div>
+            </form>
         </div>
         <!--[Demo2]一覧画面-->
         <div data-role="page" id="ListUpPage" data-theme="t" align="center">
@@ -248,13 +248,14 @@ target.value = target.value
                         <li><a href="#SearchPage">Demo3</a></li>
                     </ul>
                 </div>
-            </div>
+        </div>
         <!--[Demo3]条件検索-->
         <div data-role="page" id="SearchPage" data-theme="t" align="left">
                 <header data-role="header" data-position="fixed" data-theme="e" id="header_txt">
                     <center><h3>Demo3：条件検索</h3></center>
                 </header>
                 <section data-role="content">
+                    <div id="form_txt">
                         <form>
                             <label for="search">3.日付を検索</label>
                             <input type ="date" id="search_date" size=20>
