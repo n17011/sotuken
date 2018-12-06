@@ -82,26 +82,28 @@ function checkForm(){
             });
 }
 
-function checkDate(divider){
+function checkDate(){ 
     //データを変数にセット
-    var searchdate  = $("#search_date").val();
-    //インスタンスの生成
-    var saveData  = ncmb.DataStore("SaveData");
+    var searchdate = $('#search_date').val();
         
-    //データの取得：三項演算子(条件 ? 真:偽)によって以前と以後の処理を分ける
-    (divider ? saveData.lessThanOrEqualTo("createDate", { "__type": "Date", "iso": date.toISOString() }) : saveData.greaterThanOrEqualTo("createDate", { "__type": "Date", "iso": date.toISOString() }))
-                       .order("createDate",true)
-                       .fetchAll()
-                       .then(function(results){
-                           //日付の検索に成功した場合の処理
-                           console.log("日付の検索に成功しました："+results.length+"件");
-                           setData(results);
-                       })
-                       .catch(function(error){
-                           //日付の検索に失敗した場合の処理
-                           alert("日付の検索に失敗しました：\n" + error);
-                           console.log("日付の検索に失敗しました：\n" + error);
-                       });
+    //インスタンスの生成
+    var saveData = ncmb.DataStore("SaveData");
+        
+    //データの取得 
+    saveData.order("createDate",true)
+            .equalTo("searchdate",searchdate)
+            .fetchAll()
+            .then(function(results){
+                //日付の検索に成功した場合の処理
+                console.log("日付の検索に成功しました："+results.length+"件");
+                setData(results);
+                $.mobile.changePage('#ListUpPage');
+            })
+            .catch(function(error){
+                //日付の検索に失敗した場合の処理
+                alert("日付の検索に失敗しました：\n" + error);
+                console.log("日付の検索に失敗しました：\n" + error);
+            });
 }
 
 function setData(results) {
@@ -130,8 +132,6 @@ function searchDate(){
     $("#formTable").empty();
     var searchdate  = $("#search_date").val();
         
-    //dividerの初期値はtrue
-    var divider = true;
         
     //Date型に変換
     var date = new Date(searchDate);
@@ -140,5 +140,5 @@ function searchDate(){
     if(searchdate == ""){
         alert("年月日を入力してください");                
     }else
-        checkDate(divider);
+        checkDate(searchdate);
 }
