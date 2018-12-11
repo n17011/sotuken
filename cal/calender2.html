@@ -1,102 +1,84 @@
-<!doctype html>
 <html>
-  <head>
-      <link href="calender.css" rel="stylesheet" type="text/css">
-      <link rel="stylesheet" href="style.css">
-      <div class='outer-scratch'>
- 
-  </head>
-
-
-
-
-
-  <body onload="showCalen(0)">
-  <script type="text/javascript">
-  
-  var monthdays = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-  var days = new Array("日", "月", "火", "水", "木", "金", "土");
-  // 祝日1：何月の何日か？
-  var Holidays1 = new Array(1,1, 2,11, 3,21, 4,29, 5,3, 5,4, 5,5, 9,23, 11,3, 11,23, 12,23);
-  // 祝日2：何月の第何月曜日か？
-  var Holidays2 = new Array(1,2, 7,3, 9,3, 10,2);
-  // 現在の年、月、日の取得
-  var now = new Date();
-  var thisYear = now.getFullYear();
-  var thisMonth = now.getMonth() + 1;
-  var today = now.getDate();
-  // 表示年月の記憶
-  var year = thisYear;
-  var month = thisMonth;
-  function showCalen(n) {
-      month += n;
-      if (month == 0) { year--; month=12; }
-      else if (month == 13) { year++; month = 1; }
-      var flag = (year == thisYear && month == thisMonth) ? 1: 0;
-      var date = new Date(year, month-1, 1);  // 表示月の 1日の Date()
-      var startDay = date.getDay();
-      var dateMax = monthdays[month - 1];
-      if (month == 2 && ((year%4 == 0 && year%100 != 0) || year%400 == 0)) dateMax = 29;
-      // 休日配列の初期化
-      var holidays = new Array();
-      for (var i = 0; i <= dateMax; i++) holidays[i] = 0;
-      // 祝日1 の処理
-      var firstSunday = (startDay == 0) ? 1: 8 - startDay;
-      for (i = 0; i < Holidays1.length; i += 2) {
-            if (Holidays1[i] == month) {
-                    holidays[Holidays1[i+1]] = 1;
-                    for (var j = firstSunday; j < dateMax; j += 7)
-                        if (Holidays1[i+1] == j ) { holidays[j+1] = 1; break; }  // 振替休日
-                  }
-          }
-      // 祝日2 の処理
-      var mondays = new Array();
-      var firstMonday = (startDay < 2) ? 2 - startDay: 9 - startDay;
-      for (i = 0; i < Holidays2.length; i += 2)
-          if (Holidays2[i] == month) holidays[(Holidays2[i+1] - 1) * 7 + firstMonday] = 1;
-      var htmlStr = "<table class='calen'>\n" + "<tr class='bg1'><th colspan=7>"
-        + year + "年 " + month + "月</th></tr>\n";
-      htmlStr += "<tr class='bg2'><th class='sun'>" + days[0] + "</th>";
-      for (i = 1; i < 6; i++) htmlStr += "<th>" + days[i] + "</th>";
-      htmlStr += "<th class='sat'>" + days[6] + "</th></tr>\n";
-      var col = 0;
-      if (startDay > 0) {
-            htmlStr += "<tr>";
-            for ( ; col < startDay; col++) htmlStr += "<td>&nbsp;</td>";
-          }
-      for (i = 1; i <= dateMax; i++) {
-            if (col == 0) htmlStr += "<tr>";
-            if (flag == 1 && i == today) {
-                    if (holidays[i] == 1 || col == 0) htmlStr += "<td class='today sun'>";
-                    else if (col == 6) htmlStr += "<td class='today sat'>";
-                    else htmlStr += "<td class='today'>";
-                  }
-            else if (holidays[i] == 1 || col == 0) htmlStr += "<td class='sun'>";
-            else if (col == 6) htmlStr += "<td class='sat'>";
-            else htmlStr += "<td>";
-            htmlStr += i + "</td>";
-            if (col == 6) { htmlStr += "</tr>\n"; col=0; } else col++;
-          }
-      if (col != 0) {
-            for ( ; col < 7; col++) htmlStr += "<td>&nbsp;</td>";
-            htmlStr += "</tr>";
-          }
-      htmlStr += "</table>";
-      document.getElementById("calen").innerHTML = htmlStr;
-  }
-  //-->
+<head>
+<title>カレンダー</title>
+</head>
+<body>
+<table align="center" border="5" bordercolor="#339999" cellpadding="8" cellspacing="0">
+    <script language="JavaScript">
+    if(location.search.indexOf("/") > 0) {                    //　年月取得
+        query    = new Array();
+        query    = location.search.split("/");
+        year    = parseInt(query[1]);                    //　年
+        month    = parseInt(query[2]);                    //　月
+    }
+    else {
+        today    = new Date();
+        year    = today.getFullYear();                    //　今日の年
+        month    = today.getMonth() + 1;                    //　今日の月
+    }
+    start        = new Date(year + "/" + month + "/1");
+    startday    = start.getDay();                    //　１日の曜日
+    days        = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+    if(month == 2 && (year % 4 == 0 && year % 100 != 0 || year % 400 == 0)) {
+        days[1]++;                            //　うるう年
+    }
+    enddate        = days[month - 1];                    //　最後の日
+    prevyear    = year;                            //　前月・次月
+    prevmonth    = month - 1;
+    nextyear    = year;
+    nextmonth    = month + 1;
+    if(prevmonth < 1) {
+        prevyear--;
+        prevmonth += 12;
+    }
+    else if(nextmonth > 12) {
+        nextyear++;
+        nextmonth -= 12;
+    }
+    document.write('<tr>');
+    document.write('<td colspan="7" align="center">');
+    document.write('<a href="./cal?/', prevyear, '/', prevmonth, '/" style="font-size:10px">≪前月</a>　');
+    document.write(year, '<span style="font-size:10px">年</span>');
+    document.write(month, '<span style="font-size:10px">月</span>　');
+    document.write('<a href="./cal?/', nextyear, '/', nextmonth, '/" style="font-size:10px">次月≫</a>');
+    document.write('</td>');
+    document.write('</tr>');
+    document.write('<tr>');
+    
+    count = 0;
+    for(i = 0 ; i < startday ; i++) {                    //　１日の曜日までの空欄
+        if(count % 1 == 0) {
+            document.write('<tr>');
+        }
+        document.write('<td>　</td>');
+        ++count; 
+    }
+    for(i = 1 ; i <= enddate ; i++) {                    //　日付を書き出す
+        if(count % 1 == 0) {
+            document.write('<tr>');
+        }
+        document.write('<td align="right"');
+        if(count % 7 == 0) {
+            document.write(' style="color:red"');
+        }
+        if(count % 7 == 6) {
+            document.write(' style="color:blue"');
+        }
+        document.write('>', i, '</td>');
+        ++count;
+        if(count % 7 == 0) {
+            document.write('</tr>');
+        }
+    }
+    while(count % 1 != 0) {                            //　最後の日から土曜までの空欄
+        document.write('<td>　</td>');
+        ++count;
+        if(count % 1 == 0) {
+            document.write('</tr>');
+        }
+    }
+    //-->
     </script>
-  <div class="center">
- <input type="button" value="前月" name="hoge" onclick="showCalen(-1)">
- <input type="button" value="次月" name="huge"onclick="showCalen(1)">
-<div id="calen"></div>
-<div class="sample1Area" id="makeImg">
-	<input type="radio" name="sample1radio" id="sample1on" checked="" >
- <label for="sample1on" onclick="location.href='calender2.html'">通常</label>
- <input type="radio" name="sample1radio" id="sample1off" >
- <label for="sample1off"onclick="location.href='cal_list.html'">リスト</label>
-
-
-  </body>
+</table>
+</body>
 </html>
-
