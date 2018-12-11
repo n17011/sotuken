@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
         <script src="components/loader.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
         <link rel="stylesheet" href="components/loader.css">
         <link rel="stylesheet" href="css/style.css">
         <script src="js/cssua.min.js"></script>
@@ -24,7 +26,7 @@
                             <span id="txt_red">(必須)</span>
                     </div>
                     <div align="center">
-                            <input type ="datetime-local" id="form_datetime" size=40>
+                            <input type ="date" id="form_datetime" size=40>
                     </div>
 
                     <div id="form_txt">予定
@@ -38,7 +40,7 @@
                         <span id="txt_red">(必須)</span>
                     </div>
                     <div align = "center">
-                        <input type ="email" id="form_time" size=40>
+                        <input type ="time" id="form_time" size=40>
                     </div>
 
                     <div id="form_txt">詳細
@@ -67,26 +69,17 @@
                                     <div id="form_txt">金額
                                     </div>
                                         <div align="center">
-                                            <input type ="text" id="form_moneyA" name="money" data-type="number" size=40>
+                                            <input type ="text" id="form_moneyA" name="money"  size=40>
                                         </div>
-<script>
-/* テキストボックスを取得 */
-var NBR = document.querySelectorAll( "[data-type='number']" );
-/* イベント操作 */
-for(var i=0;i<NBR.length;i++){ NBR[ i ].oninput = fmtInput }
-
-/* 入力時に実行する処理 */
-function fmtInput( evt ){
-var target = evt.target;
-var data = target.value[ target.value.length-1 ];
-if( ! data.match( /[0-9]/ ) ){
-target.value = target.value.slice( 0, target.value.length-1 );
-}
-target.value = target.value
-.replace( /,/g, '' )
-.replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' );
-}
-</script>
+                                        <script>
+                                        $("#form_moneyA").maskMoney({
+                                          prefix:'￥',
+                                          thousands:',',
+                                          allowZero: true,
+                                          precision: '0'
+                                        });
+                                        </script>
+                                        
 
                             </div>
 
@@ -104,26 +97,16 @@ target.value = target.value
                                     <div id="form_txt">金額
                                     </div>
                                         <div align="center">
-                                            <input type ="text" id="form_moneyB" name="money" data-type="number" size=40>
+                                            <input type ="text" id="form_moneyB" name="money"  size=40>
                                         </div>
-<script>
-/* テキストボックスを取得 */
-var NBR = document.querySelectorAll( "[data-type='number']" );
-/* イベント操作 */
-for(var i=0;i<NBR.length;i++){ NBR[ i ].oninput = fmtInput }
-
-/* 入力時に実行する処理 */
-function fmtInput( evt ){
-var target = evt.target;
-var data = target.value[ target.value.length-1 ];
-if( ! data.match( /[0-9]/ ) ){
-target.value = target.value.slice( 0, target.value.length-1 );
-}
-target.value = target.value
-.replace( /,/g, '' )
-.replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' );
-}
-</script>
+                                        <script>
+                                        $("#form_moneyB").maskMoney({
+                                          prefix:'￥',
+                                          thousands:',',
+                                          allowZero: true,
+                                          precision: '0'
+                                        });
+                                        </script>
 
                             </div>
                     </div>
