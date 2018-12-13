@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex,nofollow">
-<title>jQueryで縦型カレンダーの表示①</title>
+<title>縦型カレンダー</title>
 <style>
 .schedule {
 	border-collapse: collapse;
@@ -24,15 +24,31 @@
 	}
 
 </style>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 $(function() {
 var today = new Date();
 var myYear = today.getFullYear();
 var myMonth = today.getMonth();
+$('#btn1').on('click',function() {
+	myMonth = today.getMonth() - 1;
+	if(myMonth == 0 ){
+		myYear--; 
+		myMonth = 12;
+	}
+});
+$('#btn2').on('click',function() {
+	myMonth = today.getMonth() + 1;
+	if(myMonth == 13){
+		myYear++;
+		myMonth = 1;
+	}
+});
 tuki = myMonth +1+"月のカレンダー";
+myMonth = today.getMonth();
+
 //月末を取得
-var lastday = new Date(myYear, myMonth, 0);
+var lastday = new Date(myYear, myMonth+1, 0);
 lastday = lastday.getDate();
 var wak = "";	
 for (var i=1 ; i<=lastday ; i++){
@@ -49,22 +65,13 @@ wak += "</tr>\n";
 $("#tuki").append(tuki);
 $("#listbox").append(wak);
 });
-
 </script>
 </head>
 <body>
-
+<button id="btn1">前月</button>
+<button id="btn2">次月</button>
 <h2 id="tuki"></h2>
 <p>縦型カレンダーを表示</p>
-<div class="center">
-		<input type="button" value="前月" name="hoge" onclick="showCalen(-1)">
-		<input type="button" value="次月" name="huge"onclick="showCalen(1)">
-	   <div id="calen"></div>
-	   <div class="sample1Area" id="makeImg">
-		   <input type="radio" name="sample1radio" id="sample1on" checked="" >
-		<label for="sample1on" onclick="location.href='calender2.html'">通常</label>
-		<input type="radio" name="sample1radio" id="sample1off" >
-		<label for="sample1off"onclick="location.href='cal_list.html'">リスト</label>
 <table id="listbox" class="schedule">
 <tr>
 <th>曜日</th>
@@ -72,5 +79,6 @@ $("#listbox").append(wak);
 <th width="76%">コメント</th>
 </tr>
 </table>
+
 </body>
 </html>
