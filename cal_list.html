@@ -4,81 +4,80 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex,nofollow">
 <title>縦型カレンダー</title>
-<style>
-.schedule {
-	border-collapse: collapse;
-	margin:0;
-	padding:0; 
-	width:500px;
-	-khtml-user-drag: element;
-}
-.schedule th{
-	background: #6CC;
-}
-.schedule th,
-.schedule td {
-	border:1px solid #999;
-	border-collapse: collapse;
-	margin:0;
-	padding:0.6em;
-	}
-
-</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 $(function() {
-var today = new Date();
-var myYear = today.getFullYear();
-var myMonth = today.getMonth();
-$('#btn1').on('click',function() {
-	myMonth = today.getMonth() - 1;
-	if(myMonth == 0 ){
-		myYear--; 
-		myMonth = 12;
-	}
-});
-$('#btn2').on('click',function() {
-	myMonth = today.getMonth() + 1;
-	if(myMonth == 13){
-		myYear++;
-		myMonth = 1;
-	}
-});
-tuki = myMonth +1+"月のカレンダー";
-myMonth = today.getMonth();
-
+    const today = new Date();
+    let myYear = today.getFullYear();
+    let myMonth = today.getMonth()+1;
+    $('#btn1').click( () => {
+        myMonth -= 1;
+        if (myMonth == 0) {
+            myYear--;
+            myMonth = 12;
+        }
+        getNearMonth()
+    });
+    $('#btn2').click(function () {
+        myMonth +=1;
+        if (myMonth == 13) {
+            myYear++;
+            myMonth = 1;
+        }
+        
+        getNearMonth()
+    });
+    tuki = myYear+"年"+ myMonth + "月のカレンダー";
 //月末を取得
-var lastday = new Date(myYear, myMonth+1, 0);
-lastday = lastday.getDate();
-var wak = "";	
-for (var i=1 ; i<=lastday ; i++){
-xday = new Date(myYear, myMonth, i);
-xdays = xday.getDay();
-weekjp = new Array("日","月","火","水","木","金","土");	
-weeks = weekjp[xdays];
-wak += "<tr>\n";
-wak += "<th>"+weeks+"</th>\n";
-wak += "<td align='center'>"+i+"</td>\n";
-wak += "<td></td>\n";
-wak += "</tr>\n";
-}
-$("#tuki").append(tuki);
-$("#listbox").append(wak);
+    const getNearMonth = () => {
+        let lastday = new Date(myYear, myMonth, 0);
+        lastday = lastday.getDate();
+        let wak = "";
+        for (let i = 1; i <= lastday; i++) {
+            xday = new Date(myYear, myMonth-1, i);
+            console.log(myMonth);
+            xdays = xday.getDay();
+            console.log(xday);
+            weekjp = new Array("日", "月", "火", "水", "木", "金", "土");
+            weeks = weekjp[xdays];
+            wak += "<tr>\n";
+            wak += "<th>" + weeks + "</th>\n";
+            wak += "<td align='center'>" + i + "</td>\n";
+            wak += "<td></td>\n";
+            wak += "</tr>\n";
+        }
+        $("#tuki").empty();
+        tuki = myYear+"年"+　myMonth+ "月のカレンダー";
+        $("#listbox").empty();
+        $("#tuki").append(tuki);
+        $("#listbox").append(wak);
+    }
+    getNearMonth()
 });
 </script>
 </head>
 <body>
+
 <button id="btn1">前月</button>
 <button id="btn2">次月</button>
+
 <h2 id="tuki"></h2>
 <p>縦型カレンダーを表示</p>
-<table id="listbox" class="schedule">
-<tr>
-<th>曜日</th>
-<th>日付</th>
-<th width="76%">コメント</th>
-</tr>
+
+<table id="template" class="schedule">
+    <tr>
+        <th>曜日</th>
+        <th>日付</th>
+        <th width="76%">コメント</th>
+    </tr>
 </table>
 
+<table id="listbox" class="schedule">
+    <tr>
+
+    </tr>
+</table>
+<button><a href="./cal/calender2.html">通常</a></button>
+<button><a href="./cal_list.html">リスト</a></button>
 </body>
 </html>
