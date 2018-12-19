@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <title>Chart.js TEST</title>
+  <meta charset="UTF-8">
+</head>
+<style>
+  * { box-sizing: border-box }
+  li { list-style-type: none }
+  li:before {
+    content: "";
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    margin-right: 5px;
+    border-radius: 3px;
+  }
+  li.sm:before {
+    background: #9bcad0;
+  }
+  li.pc:before {
+    background: #d5a87f;
+  }
+  li.tab:before {
+    background: #cca9ca;
+  }
+  li.etc:before {
+    background: #edef9c;
+  }
+</style>
+<body>
+  <h1>ドーナツグラフ</h1>
+
+  <div style="width: 30%;float: left">
+    <canvas id="doughnut-chart" height="450" width="600"></canvas>
+  </div>
+  <div style="width: 70%;float: right;padding: 50px">
+    <ul style="width: 200px;padding: 20px;box-shadow: 1px 1px 4px 1px #ccc">
+      <li class="sm">スマートフォン</li>
+      <li class="pc">PC</li>
+      <li class="tab">タブレット</li>
+      <li class="etc">その他デバイス</li>
+    </ul>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+  <!-- もしくは<script src="Chart.js"></script> -->
+  <script>
+  var doughnutData = [
+      {
+        value: 500,
+        color:"#9bcad0",
+        highlight: "#a7d7de",
+        label: "スマートフォン"
+      },
+      {
+        value: 150,
+        color: "#d5a87f",
+        highlight: "#e4b68a",
+        label: "PC"
+      },
+      {
+        value: 80,
+        color: "#cca9ca",
+        highlight: "#dcb7da",
+        label: "タブレット"
+      },
+      {
+        value: 20,
+        color: "#edef9c",
+        highlight: "#fcfea6",
+        label: "その他デバイス"
+      }
+    ];
+    window.onload = function(){
+      var ctx = document.getElementById("doughnut-chart").getContext("2d");
+      window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {
+        responsive : true
+      });
+    }
+
+  </script>
+</body>
+</html>
