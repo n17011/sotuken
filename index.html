@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
         <script src="components/loader.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
         <link rel="stylesheet" href="components/loader.css">
         <link rel="stylesheet" href="css/style.css">
         <script src="js/cssua.min.js"></script>
@@ -24,7 +25,7 @@
                             <span id="txt_red">(必須)</span>
                     </div>
                     <div align="center">
-                            <input type ="datetime-local" id="form_datetime" size=40>
+                            <input type ="date" id="form_datetime" size=40>
                     </div>
 
                     <div id="form_txt">予定
@@ -38,7 +39,7 @@
                         <span id="txt_red">(必須)</span>
                     </div>
                     <div align = "center">
-                        <input type ="email" id="form_time" size=40>
+                        <input type ="time" id="form_time" size=40>
                     </div>
 
                     <div id="form_txt">詳細
@@ -137,7 +138,7 @@ target.value = target.value
           var btnB = document.getElementById('b');
           var divA = document.getElementById('form_divA');
           var divB = document.getElementById('form_divB');
-        
+
           function setState(isA) {
             btnA.className = (isA == 0) ? 'btn inactive' : 'btn'; // Aのとき非表示
             divA.className = (isA == 0) ? 'boxDisplay' : 'boxNone'; // Aのとき表示
@@ -145,7 +146,7 @@ target.value = target.value
             divB.className = (isA == 1) ? 'boxDisplay' : 'boxNone'; // Bのとき表示
           }
           setState(0);
-        
+
           btnA.addEventListener('click', function(){
             if (isA == 0) return;
             isA = 0;
@@ -158,20 +159,20 @@ target.value = target.value
           });
         };
         document.addEventListener("DOMContentLoaded", clickSwitch, false);
-        
-        
-        
+
+
+
 </script>
-                    
+
                     <input type="button" value="家計簿を表示する" onclick="btn1_click()" />
 
                     <script>
                             //初期表示は非表示
                             document.getElementById("p1").style.display ="none";
-                            
+
                             function btn1_click(){
                                 var y1 = document.getElementById("p1");
-                            
+
                                 if(y1.style.display=="block"){
                                     // noneで非表示
                                     y1.style.display ="none";
@@ -181,12 +182,12 @@ target.value = target.value
                                 }
                             }
                     </script>
-                  
+
                     <!--送信ボタン-->
                     <input type="button" name="SendBtn" onclick="return sendForm();" value="送 信" data-theme="e" id="get">
                 </section>
-        
-        <!--フッター-->>
+
+        <!--フッター-->
                 <div data-role="footer" data-position="fixed" data-theme="e" id="demo" class="tab_area clearfix">
                         <ul>
                             <li><a href="#FormPage">入力画面</a></li>
@@ -200,14 +201,40 @@ target.value = target.value
         <div data-role="page" id="ListUpPage" data-theme="t" align="center">
                 <header data-role="header" data-position="fixed" data-theme="e" id="header_txt">
                     <center><h3>結果一覧</h3></center>
+                    
                 </header>
                 <section id="searchResult"></section>
-    
+
                 <section data-role="content">
                     <table id="formTable" border="1" width="100%" cellspacing="0" cellpadding="10" align="center" data-column-popup-theme="e"></table>
                 </section>
-    
-                <!--フッター-->
+                  <canvas id="myPieChart"></canvas>
+                  
+                <script>
+                var ctx = document.getElementById("myPieChart");
+                  var myPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                      labels: income,
+                      datasets: [{
+                          backgroundColor: [
+                              "#BB5179",
+                              "#FAFF67",
+                              "#58A27C",
+                              "#3C00FF"
+                          ],
+                          data: moneyA
+                      }]
+                    },
+                    options: {
+                      title: {
+                        display: true,
+                        text: '収入　割合'
+                      }
+                    }
+                  });
+                </script>
+               <!--フッター-->
                 <div data-role="footer" data-position="fixed" data-theme="e" id="demo" class="tab_area clearfix">
                     <ul>
                         <li><a href="#FormPage">入力画面</a></li>
@@ -230,7 +257,7 @@ target.value = target.value
                         </form>
                     </div>
                 </section>
-        
+
                 <!--フッター-->
                 <div data-role="footer" data-position="fixed" data-theme="e" id="demo" class="tab_area clearfix">
                     <ul>
@@ -242,4 +269,3 @@ target.value = target.value
             </div>
     </body>
 </html>
-
