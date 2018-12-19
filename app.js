@@ -1,6 +1,6 @@
 //APIキーの設定とSDKの初期化
-var appKey    = "9aa7b3e3d9c2f85aa3093bdf734eef5b98f357e55c2191ac621871fdbf757430";
-var clientKey = "c2c0df4210406c0b45155c416e7a8a4ce4df98124ea8dbe3f72342d53785538d";
+var appKey    = "";
+var clientKey = "";
 var ncmb    　= new NCMB(appKey,clientKey);
 
 function sendForm() {
